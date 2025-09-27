@@ -5,14 +5,9 @@ import json
 import argparse
 import subprocess
 from datetime import datetime
-
-
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 
 
-proxies = {
-
-}
 def sanitize_filename(name: str, max_length=200) -> str:
  
    
@@ -70,7 +65,7 @@ def fetch_transcript_list(video_id: str, languages: list):
    
     try:
         if hasattr(YouTubeTranscriptApi, "get_transcript"):
-            data = YouTubeTranscriptApi.get_transcript(video_id, languages=languages, proxies=proxies)
+            data = YouTubeTranscriptApi.get_transcript(video_id, languages=languages)
             if isinstance(data, list):
                 return data
     except Exception:
@@ -101,8 +96,6 @@ def fetch_transcript_list(video_id: str, languages: list):
                 "duration": float(duration) if duration is not None else 0.0,
             })
     return out
-
-
 
 def main(channel_url: str, languages: list, include_timestamps: bool):
     print("Finding videos...")
